@@ -9,14 +9,14 @@
     "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "lint:fix": "eslint --fix",
     "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "lint:prettier": "npm lint:check && npm prettier:check",
+    "lint:prettier": "yarn lint:check && yarn prettier:check",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
   },
   "author": "asaduzzaman599",
   "license": "ISC",
   "lint-staged": {
-    "src/**/*.ts": "npm lint:prettier"
+    "src/**/*.ts": "yarn lint:prettier"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
@@ -37,5 +37,6 @@
     "mongoose": "^7.2.1",
     "nodemon": "^2.0.22",
     "ts-node-dev": "^2.0.0"
-  }
+  },
+  "repository": "https://github.com/asaduzzaman599/university-management-auth-service.git"
 }
