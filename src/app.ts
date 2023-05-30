@@ -4,13 +4,11 @@ const app: Application = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
-
+app.use(express.urlencoded({ extended: true }))
 
 //Testing Route
-app.get('/', (req: Request, res:Response) => {
-  res.send({Status: 'Success', message: 'Server is running'})
+app.get('/', (req: Request, res: Response) => {
+  res.send({ Status: 'Success', message: 'Server is running' })
 })
 
-
-export default app;
+export default app
