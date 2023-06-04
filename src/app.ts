@@ -10,6 +10,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //Application Routes
+// console.log(app.get('env'))
+// console.log(process.env)
 
 app.use('/api/v1/users', userRouter)
 
