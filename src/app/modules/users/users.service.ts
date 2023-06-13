@@ -11,7 +11,7 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
   user.id = await generateUserId(user.role);
 
   const createdUser = await User.create(user);
-  if (!user) {
+  if (!createdUser) {
     throw new ApiError(400, 'Failed to create user!');
   }
   return createdUser;
