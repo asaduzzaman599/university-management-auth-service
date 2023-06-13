@@ -2,7 +2,8 @@ import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 
 import globalErrorHandler from './app/middlewares/global-error-hanlder';
-import { UsersRouter } from './app/modules/users/users.route';
+import routes from './app/routes';
+import httpStatus from 'http-status';
 
 const app: Application = express();
 
@@ -14,7 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 // console.log(app.get('env'))
 // console.log(process.env)
 
-app.use('/api/v1/users', UsersRouter);
+/* app.use('/api/v1/users', UsersRouter);
+app.use('/api/v1/academic-semester', AcademicSemesterRoute); */
+//replaced with
+app.use('/api/v1/', routes);
 
 //Testing Route
 app.get('/', async (req: Request, res: Response) => {
@@ -25,5 +29,18 @@ app.get('/', async (req: Request, res: Response) => {
 
 //global Error Handler
 app.use(globalErrorHandler);
+
+app.use((req, res, next) => {
+  res.status(httpStatus.NOT_FOUND).json({
+    success: false,
+    message: 'Not Found',
+    errorMessage: [
+      {
+        path: req.originalUrl,
+        message: 'Not Found',
+      },
+    ],
+  });
+});
 
 export default app;
