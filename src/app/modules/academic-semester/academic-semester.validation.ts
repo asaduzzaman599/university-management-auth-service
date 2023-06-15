@@ -44,6 +44,44 @@ const createAcademicSemesterZodSchema = z.object({
   }),
 });
 
+const updateAcademicSemesterZodSchema = z
+  .object({
+    body: z.object({
+      title: z
+        .enum([...AcademicSemesterConstant.academicSemesterTitle] as [
+          AcademicSemesterTitle,
+          ...AcademicSemesterTitle[]
+        ])
+        .optional(),
+      year: z.number().optional(),
+      code: z
+        .enum([...AcademicSemesterConstant.academicSemesterCode] as [
+          AcademicSemesterCode,
+          ...AcademicSemesterCode[]
+        ])
+        .optional(),
+      startMonth: z
+        .enum(
+          AcademicSemesterConstant.academicSemesterMonth as [Month, ...Month[]]
+        )
+        .optional(),
+      endMonth: z
+        .enum(
+          AcademicSemesterConstant.academicSemesterMonth as [Month, ...Month[]]
+        )
+        .optional(),
+    }),
+  })
+  .refine(
+    data =>
+      (data.body.title && data.body.code) ||
+      (!data.body.title && !data.body.code),
+    {
+      message: 'Either code and title both should be provided or neither',
+    }
+  );
+
 export const AcademicSemesterValidation = {
   createAcademicSemesterZodSchema,
+  updateAcademicSemesterZodSchema,
 };
