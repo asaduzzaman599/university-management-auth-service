@@ -38,3 +38,5 @@ export const academicSemesterTitleCoderMapper: Record<string, string> = {
   Summer: '02',
   Autumn: '03',
 };
+
+export const academicSemesterFilterFields = ['search', 'title', 'code', 'year'];

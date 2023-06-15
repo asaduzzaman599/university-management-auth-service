@@ -7,6 +7,7 @@ import { errorLogger } from '../../shared/logger';
 import { IGenericErrorMessage } from '../interfaces/error-message.interface';
 import { IGenericErrorResponse } from '../interfaces/error-response.interface';
 import handleZodError from '../../errors/handle-zod-error';
+import handleCastError from '../../errors/handle-cast-error';
 
 //global Error Handler
 const globalErrorHandler: ErrorRequestHandler = (
@@ -46,6 +47,11 @@ const globalErrorHandler: ErrorRequestHandler = (
           },
         ]
       : [];
+  } else if (err.name === 'CastError') {
+    const simplifiedError: IGenericErrorResponse = handleCastError(err);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorMessage = simplifiedError.errorMessages;
   } else if (err instanceof Error) {
     message = err?.message;
     errorMessage = err?.message
@@ -58,13 +64,12 @@ const globalErrorHandler: ErrorRequestHandler = (
       : [];
   }
 
-  res.status(statusCode).json({
+  return res.status(statusCode).json({
     success: false,
     message,
     errorMessage,
     ...(config.env !== 'production' ? { stack: err.stack } : null),
   });
-  next();
 };
 
 export default globalErrorHandler;
